@@ -7,6 +7,6 @@ When("the calculator is run") do
   raise('Command failed!') unless $?.success?
 end
 
-Then("the ouptut should be {string}") do |string|
-  pending # Write code here that turns the phrase above into concrete actions
+Then("the ouptut should be {string}") do |expected_output|
+  @output.should == expected_output
 end
