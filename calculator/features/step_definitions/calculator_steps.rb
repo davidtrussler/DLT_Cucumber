@@ -1,9 +1,10 @@
-Given("the input {string}") do |string|
-  pending # Write code here that turns the phrase above into concrete actions
+Given("the input {string}") do |input|
+  @input = input
 end
 
 When("the calculator is run") do
-  pending # Write code here that turns the phrase above into concrete actions
+  @output = `ruby calc.rb #{@input}`
+  raise('Command failed!') unless $?.success?
 end
 
 Then("the ouptut should be {string}") do |string|
