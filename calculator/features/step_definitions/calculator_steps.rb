@@ -8,5 +8,5 @@ When("the calculator is run") do
 end
 
 Then("the ouptut should be {string}") do |expected_output|
-  @output.should == expected_output
+  expect(@output).to eq(expected_output)
 end
