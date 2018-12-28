@@ -8,6 +8,11 @@ class Account
   end
 end
 
+class Teller
+  def withdraw_from(account, amount)
+  end
+end
+
 Given /^I have deposited \£(\d+) in my account$/ do |amount|
   my_account = Account.new
   my_account.deposit(amount)
@@ -16,7 +21,8 @@ Given /^I have deposited \£(\d+) in my account$/ do |amount|
 end
 
 When /^I request \£(\d+)$/ do |amount|
-  pending ('How do we simulate cash being requested?')
+  teller = Teller.new
+  teller.withdraw_from(my_account, amount)
 end
 
 Then /^\£(\d+) should be dispensed$/ do |amount|
