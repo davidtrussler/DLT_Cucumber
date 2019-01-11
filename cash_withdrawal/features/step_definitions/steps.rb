@@ -9,17 +9,40 @@ class Account
 end
 
 class Teller
+  def initialize(cash_slot)
+    @cash_slot = cash_slot
+  end
+
   def withdraw_from(account, amount)
+    @cash_slot.dispense(amount)
   end
 end
 
-module KnowsMyAccount
+class CashSlot
+  def contents
+    @contents or raise ('I\'m empty')
+  end
+
+  def dispense(amount)
+    @contents = amount
+  end
+end
+
+module KnowsTheDomain
   def my_account
     @my_account ||= Account.new
   end
+
+  def cash_slot
+    @cash_slot ||= CashSlot.new
+  end
+
+  def teller
+    @teller ||= Teller.new(cash_slot)
+  end
 end
 
-World(KnowsMyAccount)
+World(KnowsTheDomain)
 
 Given /^I have deposited \£(\d+) in my account$/ do |amount|
   my_account.deposit(amount)
@@ -28,10 +51,10 @@ Given /^I have deposited \£(\d+) in my account$/ do |amount|
 end
 
 When /^I request \£(\d+)$/ do |amount|
-  teller = Teller.new
+  teller = Teller.new(cash_slot)
   teller.withdraw_from(my_account, amount)
 end
 
 Then /^\£(\d+) should be dispensed$/ do |amount|
-  pending ('How do we validate that cash was dispensed?')
+  cash_slot.contents.should == amount
 end
