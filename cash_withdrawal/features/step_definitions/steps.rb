@@ -1,5 +1,3 @@
-require File.join(File.dirname(__FILE__), '..', '..', 'lib', 'nice_bank')
-
 module KnowsTheDomain
   def my_account
     @my_account ||= Account.new
